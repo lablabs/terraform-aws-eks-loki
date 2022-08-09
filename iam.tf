@@ -32,7 +32,7 @@ data "aws_iam_policy_document" "this_assume" {
   count = local.irsa_role_create && var.irsa_assume_role_enabled ? 1 : 0
 
   statement {
-    sid    = "AllowAssume<$addon-name>Role"
+    sid    = "AllowAssumeLokiRole"
     effect = "Allow"
     actions = [
       "sts:AssumeRole"
@@ -48,7 +48,7 @@ resource "aws_iam_policy" "this" {
 
   name        = "${var.irsa_role_name_prefix}-${var.helm_chart_name}"
   path        = "/"
-  description = "Policy for <$addon-name> service"
+  description = "Policy for Loki service"
   policy      = var.irsa_assume_role_enabled ? data.aws_iam_policy_document.this_assume[0].json : data.aws_iam_policy_document.this[0].json
 
   tags = var.irsa_tags
