@@ -11,7 +11,7 @@ We help companies build, run, deploy and scale software and infrastructure by em
 
 ## Description
 
-A terraform module to deploy the Loki on Amazon EKS cluster.
+A terraform module to deploy the [Grafana Loki](https://grafana.com/docs/loki/latest/) on Amazon EKS cluster.
 
 ## Related Projects
 
