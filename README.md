@@ -157,6 +157,59 @@ No modules.
 | <a name="output_kubernetes_application_attributes"></a> [kubernetes\_application\_attributes](#output\_kubernetes\_application\_attributes) | Argo kubernetes manifest attributes |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
+## Example values
+
+Example Helm Chart (loki-distributed) values to deploy Table Manager, Compactor and Loki which is using DynamoDB as index store and S3 bucket as a chunk storage.
+
+```json
+
+values = yamlencode({
+  "loki" : {
+    "schemaConfig" : {
+      "configs" : [
+        {
+          "from" : "2020-10-24",
+          "store" : "aws",
+          "object_store" : "s3",
+          "schema" : "v11",
+          "index" : {
+            "prefix" : "loki_index_",
+            "period" : "24h"
+          }
+        }
+      ]
+    }
+    "storageConfig" : {
+      "boltdb_shipper" : null
+      "filesystem" : null
+      "aws" : {
+        "s3" : "s3://eu-central-1/example-ec1-logging-loki"
+        "dynamodb" : {
+          "dynamodb_url" : "dynamodb://eu-central-1"
+        }
+      }
+    }
+  }
+  "tableManager" : {
+    "enabled" : true
+    "extraArgs" : [
+      "-table-manager.retention-deletes-enabled=true",
+      "-table-manager.retention-period=1440h",
+      "-table-manager.index-table.enable-ondemand-throughput-mode=true",
+      "-table-manager.index-table.inactive-enable-ondemand-throughput-mode=true"
+    ]
+  }
+  "compactor" : {
+    "enabled" : true
+    "persistence" : {
+      "enabled" : true
+      "size" : "10Gi"
+    }
+  }
+})
+
+```
+
 ## Contributing and reporting issues
 
 Feel free to create an issue in this repository if you have questions, suggestions or feature requests.
