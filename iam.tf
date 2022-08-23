@@ -6,26 +6,20 @@ data "aws_iam_policy_document" "this" {
   count = local.irsa_role_create && var.irsa_policy_enabled && !var.irsa_assume_role_enabled ? 1 : 0
 
   statement {
-    sid = "Autoscaling"
-
-    actions = [
-      "autoscaling:DescribeAutoScalingGroups",
-      "autoscaling:DescribeAutoScalingInstances",
-      "autoscaling:DescribeLaunchConfigurations",
-      "autoscaling:DescribeTags",
-      "autoscaling:SetDesiredCapacity",
-      "autoscaling:TerminateInstanceInAutoScalingGroup",
-      "ec2:DescribeLaunchTemplateVersions",
-      "ec2:DescribeInstanceTypes"
-    ] # checkov:skip=CKV_AWS_111
-
-    resources = [
-      "*",
-    ]
-
+    sid    = "AllowLokiObjectStore"
     effect = "Allow"
+    actions = [
+      "s3:ListBucket",
+      "s3:ListObjects",
+      "s3:GetObject",
+      "s3:DeleteObject",
+      "s3:PutObject",
+      "s3:PutObjectAcl"
+    ]
+    resources = [
+      "arn:aws:s3:::loki*"
+    ]
   }
-
 }
 
 data "aws_iam_policy_document" "this_assume" {
