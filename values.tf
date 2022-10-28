@@ -1,5 +1,14 @@
 locals {
-  values_default_sa_enabled = yamlencode({
+  values_default = yamlencode({
+    "ingester" : {
+      "replicas" : 2
+    }
+    "distributor" : {
+      "replicas" : 2
+    }
+  })
+
+  helm_values_sa_enabled = yamlencode({
     "serviceAccount" : {
       "name" : "${var.service_account_name}"
       "annotations" : {
