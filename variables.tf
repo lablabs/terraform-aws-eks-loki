@@ -63,12 +63,6 @@ variable "values" {
   description = "Additional yaml encoded values which will be passed to the Helm chart, see https://hub.helm.sh/charts/stable/loki"
 }
 
-variable "servicemonitor_enabled" {
-  type        = bool
-  default     = true
-  description = "Whether to enable Service Monitor"
-}
-
 # ================ IRSA variables (optional) ================
 
 variable "rbac_create" {

@@ -1,11 +1,5 @@
 locals {
   values_default = yamlencode({
-    "ingester" : {
-      "replicas" : 2
-    }
-    "distributor" : {
-      "replicas" : 2
-    }
   })
 
   helm_values_sa_enabled = yamlencode({
@@ -14,12 +8,6 @@ locals {
       "annotations" : {
         "eks.amazonaws.com/role-arn" : "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${aws_iam_role.this.0.name}"
       }
-    }
-
-  })
-  helm_values_servicemonitor_enabled = yamlencode({
-    "serviceMonitor" : {
-      "enabled" : true
     }
   })
 }
@@ -31,7 +19,6 @@ data "utils_deep_merge_yaml" "values" {
   input = compact([
     local.values_default,
     var.service_account_create ? local.helm_values_sa_enabled : "",
-    var.servicemonitor_enabled ? local.helm_values_servicemonitor_enabled : "",
     var.values
   ])
 }

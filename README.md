@@ -145,7 +145,6 @@ No modules.
 | <a name="input_rbac_create"></a> [rbac\_create](#input\_rbac\_create) | Whether to create and use RBAC resources | `bool` | `true` | no |
 | <a name="input_service_account_create"></a> [service\_account\_create](#input\_service\_account\_create) | Whether to create Service Account | `bool` | `true` | no |
 | <a name="input_service_account_name"></a> [service\_account\_name](#input\_service\_account\_name) | The k8s loki service account name | `string` | `"loki"` | no |
-| <a name="input_servicemonitor_enabled"></a> [servicemonitor\_enabled](#input\_servicemonitor\_enabled) | Whether to enable Service Monitor | `bool` | `true` | no |
 | <a name="input_settings"></a> [settings](#input\_settings) | Additional helm sets which will be passed to the Helm chart values, see https://hub.helm.sh/charts/stable/loki | `map(any)` | `{}` | no |
 | <a name="input_values"></a> [values](#input\_values) | Additional yaml encoded values which will be passed to the Helm chart, see https://hub.helm.sh/charts/stable/loki | `string` | `""` | no |
 
